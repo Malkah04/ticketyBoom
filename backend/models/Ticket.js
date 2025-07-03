@@ -36,7 +36,7 @@ const ticketSchema =mongoose.Schema({
         required :true,
     },
     numOfTickets:{
-        type:number,
+        type:Number,
         required:true,
     },
     images:{
@@ -46,7 +46,25 @@ const ticketSchema =mongoose.Schema({
     sold :{
         type:Number,
         default:0,
-    }
+    },
+    organizer:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
+        required:true
+    },
+    status:{
+        type:String,
+        required:true,
+        enum:[
+            'completed',
+            'inComplete',
+        ],
+        default:'inComplete'
+    },
+
+
+},{
+    timestamps:true
 })
 
 
