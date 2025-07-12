@@ -15,12 +15,13 @@ const ticketSchema =mongoose.Schema({
         type:String,
         required:true,
         enum :[
-            'Art',
-            'Comdy',
-            'Music',
-            'Sports',
-            'Movies',
-            'LifeStyle'
+            'art',
+            'comdy',
+            'sports',
+            'movies',
+            'lifeStyle',
+            'theater',
+            "concert"
         ]
     },
     date:{
@@ -41,7 +42,6 @@ const ticketSchema =mongoose.Schema({
     },
     images:{
         type:[String],
-        default :[],
     },
     sold :{
         type:Number,
@@ -60,6 +60,10 @@ const ticketSchema =mongoose.Schema({
             'inComplete',
         ],
         default:'inComplete'
+    },
+    location:{
+        type:String,
+        required:true
     },
 
 
