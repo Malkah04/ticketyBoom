@@ -3,11 +3,14 @@ const { Ticket } = require('./models/Ticket');
 const ticketPath =require('./routes/tickets');
 const connectDB = require('./config/db');
 const authPath =require('./routes/auth')
+const cors = require("cors");
 
 require("dotenv").config();
 
 
 const app =express();
+app.use(cors());
+
 
 connectDB()
 
