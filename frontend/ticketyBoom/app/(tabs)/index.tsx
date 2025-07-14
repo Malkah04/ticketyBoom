@@ -28,7 +28,7 @@ export default function Index() {
   
   const findTicketByCategory = async () => {
     try {
-      const response =await fetch(`http://localhost:8000/api/tickets/latest/${limit}`);
+      const response =await fetch(`http://192.168.1.6:8000/api/tickets/latest/${limit}`);
       const data = await response.json();
      setTickets(data);
       }
