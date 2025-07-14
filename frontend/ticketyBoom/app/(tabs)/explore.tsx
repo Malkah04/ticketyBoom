@@ -1,7 +1,11 @@
-import { ActivityIndicator, FlatList, Text ,View  ,Image ,StyleSheet} from "react-native";
+import { ActivityIndicator, FlatList, Text ,View  ,Image ,StyleSheet ,Pressable} from "react-native";
 import { useEffect, useState } from "react";
+import { router } from "expo-router";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { FontAwesome } from '@expo/vector-icons';
 
-type tickets ={
+
+type Ticket ={
     _id : string;
     title : string;
     description : string;
@@ -20,12 +24,13 @@ type tickets ={
 
 }
 
-export default function Profile(){
-    const [tickets , setTickets] = useState<tickets[]>([]);
+export default function Explore(){
+    const [tickets , setTickets] = useState<Ticket[]>([]);
     const [loading , setLoading] = useState<boolean>(true);
+    const [press ,setPress] =useState(false);
     const getTickets= async ()=>{
         try{
-            const response = await fetch('http://localhost:8000/api/tickets/');
+            const response = await fetch('http://192.168.1.6:8000/api/tickets/');
             const data = await response.json();
             setTickets(data);
             setLoading(false);
@@ -35,6 +40,13 @@ export default function Profile(){
             setLoading(false);
         }
         
+    }
+    const sendId=(id :string)=>{
+        router.push({pathname:"../component/singleProduct",
+            params:{
+                id :id
+            }
+        })
     }
     useEffect(()=>{
         getTickets();
@@ -56,7 +68,16 @@ export default function Profile(){
                 renderItem={({ item }) => {
                     if (item.status !== 'inComplete') return null;
                     return (
-                        <View style={styles.card}>
+                        <View style={{paddingTop:50}}>
+                        <Pressable onPress={()=>{sendId(item._id)}} >
+                            <View style={styles.card}>
+                                 <View style={{ alignSelf:"flex-end" ,marginBottom:5 ,marginRight:20}}>
+                                    <Pressable onPress={()=>{}} > 
+                                        <Text>
+                                        <FontAwesome name= {press? "heart" : "heart-o" }size={20} color="red" />
+                                        </Text>
+                                         </Pressable>
+                                </View>
                             {item.images.length > 0 && item.images[0] !== '' && (
                                 <Image
                                     source={{ uri: item.images[0]}}
@@ -64,6 +85,19 @@ export default function Profile(){
                                 />
                             )}
                             <Text style={styles.text}>{item.title}</Text>
+                            <View style={styles.container}>
+                                <View style={{flex:1 ,flexDirection:"row" ,paddingTop:20 ,justifyContent:"space-between" }}>
+                                    <View  style={{flex:1 ,flexDirection:"row"}}>
+                                        <Text>
+                                            <Ionicons name="location" size={18} color="black" />
+                                        </Text>
+                                <Text style={{fontWeight:"bold"}}>{item.location}</Text>
+                                    </View>
+                                <Text style={styles.price}>{item.price + "$"}</Text>
+                                </View>
+                            </View>
+                        </View>
+                        </Pressable>
                         </View>
                     );
                 }}
@@ -83,19 +117,32 @@ const styles =StyleSheet.create ({
   text:{
     fontSize: 18,
     fontWeight: 'bold' ,
-    color:"#260432",
+    color:"black",
     marginLeft: 10,
   },
   card:{
-   padding: 10,
     backgroundColor: "#f9f9f9",
     borderRadius: 12,
-    marginHorizontal: 10,
     borderColor: "#ddd",
     borderWidth: 1,
-    width: "100%",
-    height: 320,
+    width: "90%",
+    height: 390,
     alignItems: "center",
+    marginBottom:-25,
+    alignSelf:"center",
+    padding:10
+
     
-  }
+  },
+  container :{
+    flex:1 ,
+    flexDirection:"row" ,
+    justifyContent:"space-between" ,
+    width:"90%" 
+  },
+    price:{
+    color :"red" ,
+    fontWeight:"bold" ,
+    marginLeft:20
+  },
 })
