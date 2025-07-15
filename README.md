@@ -45,5 +45,6 @@
 ## 👩‍💻 Developed By
 
 **Malak Sobhy**  
+**Fady Monuir**
 
 ---
