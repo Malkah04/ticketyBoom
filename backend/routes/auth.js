@@ -3,6 +3,7 @@ const router = express.Router();
 const asyncHandler = require('express-async-handler');
 const { User } = require('../models/User');
 const bcrypt =require('bcryptjs')
+const jwt =require('jsonwebtoken')
 
 // signup
 
@@ -21,7 +22,7 @@ router.post('/register' ,asyncHandler(async(req,res)=>{
         role
     })
     const result =await newUser.save();
-    const token =null
+    const token =jwt.sign({id:result._id, role:result.role},process.env.JWT_SECRET ,{expiresIn:"150d"});
 
     // to send all data to user but not password
     const {password ,...others} =result._doc
@@ -39,7 +40,7 @@ router.post('/login' ,asyncHandler(async(req,res)=>{
     if(!isPasswordMatch){
         return res.status(400).json("wrong password")
     }
-    const token =null
+    const token =jwt.sign({id:checkEmail._id, role:checkEmail.role},process.env.JWT_SECRET ,{expiresIn:"150d"});
     const {password ,...other} =user._doc;  
     res.status(201).json({...other ,token});
 }))
