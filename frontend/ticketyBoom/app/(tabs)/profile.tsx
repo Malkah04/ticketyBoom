@@ -10,10 +10,10 @@ export default function Profile() {
       <Text style={styles.title2}>This is the profile page</Text>
       <Text style={styles.title3}>This is the profile page</Text>
 
-      {/* Navigate to Login
+      {/* Navigate to Login */}
       <Pressable style={styles.button} onPress={() => router.push('/authPage/LogIn')}>
         <Text style={styles.buttonText}>Login</Text>
-      </Pressable> */}
+      </Pressable>
     </View>
   );
 }
@@ -40,6 +40,16 @@ export default function Profile() {
       fontSize: 22,
       color: '#ffe5b4',
       marginBottom: 30,
+    },
+    button: {
+      backgroundColor: '#26a69a',
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      borderRadius: 5,
+    },
+    buttonText: {
+      color: '#fff',
+      fontSize: 16,
     },
   });
   

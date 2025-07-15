@@ -95,14 +95,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: '600',
-    color: '#fff',
+    color: '#e8aa42',
     textAlign: 'center',
     marginBottom: 30,
   },
   label: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#ddd',
+    color: '#e8aa42',
     marginBottom: 6,
     marginTop: 10,
   },
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   logInText: {
     textAlign: 'center',
     fontSize: 15,
-    color: '#ccc',
+    color: '#e8aa42',
   },
   logInLink: {
     fontSize: 15,

@@ -28,7 +28,7 @@ export default function Index() {
   
   const findTicketByCategory = async () => {
     try {
-      const response =await fetch(`http://localhost:8000/api/tickets/latest/${limit}`);
+      const response =await fetch(`http://192.168.1.6:8000/api/tickets/latest/${limit}`);
       const data = await response.json();
      setTickets(data);
       }
@@ -60,7 +60,7 @@ export default function Index() {
     showsHorizontalScrollIndicator={false}
     keyExtractor={(item) => item._id}
     ListFooterComponent={() => (
-      <Pressable onPress={() => {router.push('/(tabs)/explore')}}>
+      <Pressable onPress={() => {router.push('../pages/explore')}}>
         <View style={styles.card}>
         <Text style={styles.seeMoreText}>See More Tickets</Text>
         </View>

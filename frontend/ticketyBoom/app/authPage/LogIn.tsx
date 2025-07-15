@@ -73,13 +73,13 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: '600',
     textAlign: 'center',
-    color: '#ffffff',
+    color: '#e8aa42',
     marginBottom: 30,
   },
   label: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#dddddd',
+    color: '#e8aa42',
     marginBottom: 6,
     marginTop: 10,
   },
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   },
   signupText: {
     fontSize: 15,
-    color: '#ccc',
+    color: '#e8aa42',
   },
   signupLink: {
     fontSize: 15,
