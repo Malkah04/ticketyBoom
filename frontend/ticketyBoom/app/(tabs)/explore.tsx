@@ -39,7 +39,7 @@ export default function Explore(){
     const [press ,setPress] =useState(false);
     const getTickets= async (c:string)=>{
         try{
-            const response = await fetch(`http://192.168.1.6:8000/api/tickets/category/${c}`);
+            const response = await fetch(`http://192.168.1.3:8000/api/tickets/category/${c}`);
             const data = await response.json();
             switch(c){
                 case 'art' :

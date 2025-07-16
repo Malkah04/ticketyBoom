@@ -38,7 +38,7 @@ export default function SingleProduct() {
 
   const fetchItem = async () => {
     try {
-      const response = await fetch(`http://192.168.1.6:8000/api/tickets/${id}`);
+      const response = await fetch(`http://192.168.1.3:8000/api/tickets/${id}`);
       const data = await response.json();
       setItem(data); 
       setLoading(false);
