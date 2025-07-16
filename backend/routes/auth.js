@@ -40,7 +40,7 @@ router.post('/login' ,asyncHandler(async(req,res)=>{
     if(!isPasswordMatch){
         return res.status(400).json("wrong password")
     }
-    const token =jwt.sign({id:checkEmail._id, role:checkEmail.role},process.env.JWT_SECRET ,{expiresIn:"150d"});
+    const token =jwt.sign({id:user._id, role:user.role},process.env.JWT_SECRET ,{expiresIn:"150d"});
     const {password ,...other} =user._doc;  
     res.status(201).json({...other ,token});
 }))

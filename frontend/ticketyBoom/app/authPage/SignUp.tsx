@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
-import { router } from 'expo-router';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Pressable, Alert } from 'react-native';
 import { useRouter } from "expo-router";
-import {
-  createStaticNavigation,
-  useNavigation,
-} from '@react-navigation/native';
 const navigation = useRouter();
 
 const SignUp = () => {
@@ -15,8 +10,27 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const handleSignUp = () => {
-    return 0;
+  const handleSignUp = async () => {
+    const response =await fetch("http://localhost:8000/api/auth/register", {
+      method:"post",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        userName :username,
+        email,
+        password
+      })
+    })
+      const data =await response.json();
+      if(response.ok){
+        console.log(data)
+        Alert.alert("register")
+        return data;
+      }else{
+        Alert.alert("email already exist")
+      }
+    
   }
   
   return (

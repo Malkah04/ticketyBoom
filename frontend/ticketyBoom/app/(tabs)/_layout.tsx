@@ -21,61 +21,35 @@ export default function RootLayout() {
 
   return (
     <Tabs
-      screenOptions={{
-        tabBarStyle: {
-          borderTopWidth: 0,
-          backgroundColor: "#121212",
-          height: 60,
-          padding: 5,
-        },
-        headerTintColor: "#26a69a",
-      }}
+        screenOptions={{
+            tabBarStyle: {
+            backgroundColor: "white",
+            height: 70,
+            paddingBottom: 10,            
+            },
+            headerTintColor: "black",
+            headerShown:false ,
+        }}
+        initialRouteName="explore"
     >
-      <Tabs.Screen
-        name="yourtickets"
-        options={{
-          headerTitle: "Your Tickets",
-          tabBarShowLabel: false,
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name={focused ? "ticket-sharp" : "ticket-outline"}
-              size={30}
-              color={focused ? "#26a69a" : "white"}
-            />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
-        name="index"
-        options={{
-          headerTitle: "TicketyBoom",
-          tabBarShowLabel: false,
-          headerTitleAlign: "center",
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name={focused ? "home-sharp" : "home-outline"}
-              size={30}
-              color={focused ? "#26a69a" : "white"}
-            />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
-        name="profile"
-        options={{
-          headerTitle: "Profile",
-          tabBarShowLabel: false,
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name={focused ? "person-sharp" : "person-outline"}
-              size={30}
-              color={focused ? "#26a69a" : "white"}
-            />
-          ),
-        }}
-      />
+      <Tabs.Screen name="explore" options={{headerTitle:"Explore",tabBarShowLabel :false ,tabBarIcon : ({focused ,color})=>{
+            return <Ionicons name={focused ? "grid" : "grid-outline"} size={24} color={color? "red" : "white"} />
+        } }}/>
+       <Tabs.Screen name="search" options={{headerTitle:"Favourites",tabBarShowLabel :false ,tabBarIcon : ({focused ,color})=>{
+            return <Ionicons name={focused ? "search-sharp" : "search-outline"} size={24} color={color? "red" : "white"} />
+        } }}/>
+        <Tabs.Screen name="index" options={{ headerTitle : "TicketyBoom" , tabBarShowLabel :false , headerTitleAlign:"center", tabBarIcon : ({focused ,color})=>{
+        return <Ionicons name={focused ? "home-sharp" : "home-outline"} size={24} color={color? "red" : "white"} />
+        } }}/>
+        
+        <Tabs.Screen name="yourtickets" options={{headerTitle:"Your Tickets",tabBarShowLabel :false ,tabBarIcon : ({focused ,color})=>{
+                return <Ionicons name={focused ? "ticket-sharp" : "ticket-outline"} size={24} color={color? "red" : "white"} />
+        } }}/>  
+        
+         <Tabs.Screen name="profile" options={{headerTitle:"Profile" ,tabBarShowLabel :false ,tabBarIcon : ({focused ,color})=>{
+        return <Ionicons name={focused ? "person-sharp" : "person-outline"} size={24} color={color? "red" : "white"} />
+      } }}/>
+       
     </Tabs>
   );
 }

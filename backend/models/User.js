@@ -27,6 +27,7 @@ const userSchema = mongoose.Schema({
             "admin",
             "user"
         ],
+        default:"user"
     }
 
 },{
