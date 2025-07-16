@@ -1,17 +1,34 @@
 import React, { useState } from 'react';
 import { useRouter } from "expo-router";
-import { View, Text, TextInput, Pressable, Image, StyleSheet } from "react-native";
-import {
-  createStaticNavigation,
-  useNavigation,
-} from '@react-navigation/native';
-
+import { View, Text, TextInput, Pressable, Image, StyleSheet, Alert } from "react-native";
 const navigation = useRouter();
 
 const LogIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const login=async ()=>{
+    const response =await fetch(`http://localhost:8000/api/auth/login` ,{
+      method:"post",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        email,
+        password
+      })
+    })
+    const data = await response.json();
+    if(response.ok){
+      Alert.alert("login")
+      console.log("login")
+       console.log("User data:", data);
+      return data;
+    }
+    else{
+      Alert.alert("email or password incorrect")
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -46,13 +63,13 @@ const LogIn = () => {
       </Pressable>
 
       {/* Login Button */}
-      <Pressable style={styles.signInButton} onPress={() => { /* handleLogin(); */ }}>
+      <Pressable style={styles.signInButton} onPress={() => {login()}}>
         <Text style={styles.signInText}>Login</Text>
       </Pressable>
 
       {/* Sign up link */}
       <View style={styles.signupContainer}>
-        <Text style={styles.signupText}>Don't have an account?</Text>
+        <Text style={styles.signupText}>Dont have an account?</Text>
         <Pressable onPress={() => navigation.push('./SignUp')}>
           <Text style={styles.signupLink}> Sign up</Text>
         </Pressable>

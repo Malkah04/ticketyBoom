@@ -1,10 +1,10 @@
 import { Text ,View } from "react-native";
 
-export default function profile(){
+export default function Search(){
     return(
         <View>
             <Text>
-                This is the fav page
+                This is the search page
             </Text>
         </View>
     )

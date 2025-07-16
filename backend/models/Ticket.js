@@ -16,9 +16,9 @@ const ticketSchema =mongoose.Schema({
         required:true,
         enum :[
             'art',
-            'comdy',
-            'sports',
-            'movies',
+            'comedy',
+            'sport',
+            'movie',
             'lifeStyle',
             'theater',
             "concert"
