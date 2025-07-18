@@ -8,7 +8,7 @@ const LogIn = () => {
   const [password, setPassword] = useState('');
 
   const login=async ()=>{
-    const response =await fetch(`http://localhost:8000/api/auth/login` ,{
+    const response =await fetch(`http://192.168.1.3:8000/api/auth/login` ,{
       method:"post",
       headers:{
         "Content-Type":"application/json"

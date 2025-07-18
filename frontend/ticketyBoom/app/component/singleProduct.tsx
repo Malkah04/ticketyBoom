@@ -33,7 +33,7 @@ export default function SingleProduct() {
   const [loading, setLoading] = useState(true);
   const [press, setPress] = useState(false);
   const [visible, setVisible] = useState(false);
-  const id = searchParams?.id;
+  const id = searchParams?.id || 4;
   const router =useRouter();
 
   const fetchItem = async () => {

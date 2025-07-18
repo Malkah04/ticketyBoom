@@ -1,6 +1,5 @@
 import { Text, View, Pressable, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
-
 export default function Profile() {
   const router = useRouter();
 
@@ -13,6 +12,11 @@ export default function Profile() {
       {/* Navigate to Login */}
       <Pressable style={styles.button} onPress={() => router.push('/authPage/LogIn')}>
         <Text style={styles.buttonText}>Login</Text>
+      </Pressable>
+
+      {/* Navigate to ticket */}
+      <Pressable style={styles.button} onPress={() => router.push('../component/singleProduct')}>
+        <Text style={styles.buttonText}>ticket</Text>
       </Pressable>
     </View>
   );

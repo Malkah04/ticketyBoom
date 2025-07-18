@@ -73,7 +73,8 @@ export default function Explore(){
         
     }
     const sendId=(id :string)=>{
-        router.push({pathname:"../component/singleProduct",
+        router.push({pathname:"../pages/Ticket",
+        // router.push({pathname:"../component/singleProduct",
             params:{
                 id :id
             }

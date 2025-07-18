@@ -11,7 +11,7 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const handleSignUp = async () => {
-    const response =await fetch("http://localhost:8000/api/auth/register", {
+    const response =await fetch("http://192.168.1.3:8000/api/auth/register", {
       method:"post",
       headers:{
         "Content-Type":"application/json"
