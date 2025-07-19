@@ -13,6 +13,14 @@ router.post('/register' ,asyncHandler(async(req,res)=>{
     if(user){
         return res.status(400).json({message:'user already exist'})
     }
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!pattern.test(email)){
+        return res.status(404).json({message:"email not vaild"})
+    }
+    passwordPattern=/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/;
+    if(!passwordPattern.test(req.body.password)){
+        return res.status(404).json({message:"password not vaild"})
+    }
     const salt = await bcrypt.genSalt(10);
     req.body.password =await bcrypt.hash( req.body.password ,salt);
     const newUser = new User({
