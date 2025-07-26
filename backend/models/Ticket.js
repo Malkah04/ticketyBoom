@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const { describe } = require('node:test');
-const { type } = require('os');
 
 const ticketSchema =mongoose.Schema({
     title: {
