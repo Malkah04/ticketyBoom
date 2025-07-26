@@ -97,5 +97,37 @@ router.get('/latest/:num' , asyncHandler(async(req,res)=>{
     res.status(200).json(tickets);
 }))
 
+router.get("/search/:query" , asyncHandler(async(req,res)=>{
+    const tickets =await Ticket.find({
+        "$or":[
+            {title:{$regex :req.params.query , $options: 'i'}},
+            {category:{$regex :req.params.query , $options: 'i'}},
+            {location:{$regex :req.params.query , $options: 'i'}}
+        ]
+    })
+    if(!tickets || tickets.length===0){
+        return res.status(400).json({message:"no ticket found"})
+    }
+    res.status(200).json(tickets)
+}))
+
+router.post("/filter" ,asyncHandler(async(req,res)=>{
+   const {price ,category} =req.body
+   
+   let filter ={}
+   if(price){
+    filter.price ={$lte:price}
+   }
+   if(category){
+    filter.category =category
+   }
+   const tickets =await Ticket.find(filter)
+   if(!tickets || tickets.length===0){
+        return res.status(400).json({message:"no ticket found"})
+    }
+    res.status(200).json(tickets)
+}))
+
+
 module.exports =router
 
