@@ -8,11 +8,10 @@ import {
   ScrollView,
   Pressable,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import { useLocalSearchParams, router } from 'expo-router';
 import DashedLine from 'react-native-dashed-line';
-import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
-import LoadingScreen from './LoadingScreen';
+import LoadingScreen from '../pages/LoadingScreen'; 
 import img1 from '../../assets/images/img.jpg';
 
 type Ticket = {
@@ -33,16 +32,11 @@ type Ticket = {
   sold: number;
 };
 
-export const screenOptions = {
-  headerShown: false,
-};
-
 const Ticket = () => {
   const [loading, setLoading] = useState(true);
   const [item, setItem] = useState<Ticket | null>(null);
   const [press, setPress] = useState(false);
-  const searchParams = useLocalSearchParams();
-  const id = searchParams?.id;
+  const { id } = useLocalSearchParams();
 
   const fetchItem = async () => {
     try {
@@ -50,15 +44,16 @@ const Ticket = () => {
       const response = await fetch(`http://192.168.1.3:8000/api/tickets/${id}`);
       const data = await response.json();
       setItem(data);
-      setLoading(false);
     } catch (error) {
-      console.log(error);
+      console.error('Error fetching ticket:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchItem();
-  }, []);
+  }, [id]);
 
   const getImage = () => {
     if (item?.images?.length) {
@@ -72,7 +67,7 @@ const Ticket = () => {
   if (loading || !item) return <LoadingScreen />;
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 100 }}>
       {/* Header */}
       <View style={styles.header}>
         <Ionicons name="arrow-back" size={24} color="#e8aa42" onPress={() => router.back()} />
@@ -91,17 +86,16 @@ const Ticket = () => {
             style={styles.eventImage}
           />
 
-          <Text style={styles.eventTitle}>{item?.title || 'No Title'}</Text>
+          <Text style={styles.eventTitle}>{item.title}</Text>
         </View>
 
         <DashedLine dashLength={9} dashThickness={2} dashGap={6} dashColor={'gray'} />
 
         <View style={styles.containerLoc}>
           <FontAwesome5 name="theater-masks" size={24} color="#e8aa42" />
-          <Text style={styles.textLoc}>{item?.category || 'No category'}</Text>
+          <Text style={styles.textLoc}>{item.category}</Text>
         </View>
 
-        {/* Decorative Cuts */}
         <View style={styles.circleLeft2} />
         <View style={styles.circleRight2} />
 
@@ -110,7 +104,7 @@ const Ticket = () => {
           <View>
             <Text style={styles.label}>Location</Text>
             <Ionicons name="location" size={19} color="#e8aa42" />
-            <Text style={styles.value}>{item?.location || 'No Location'}</Text>
+            <Text style={styles.value}>{item.location}</Text>
           </View>
 
           <View>
@@ -120,22 +114,21 @@ const Ticket = () => {
 
           <View>
             <Text style={styles.label}>Time</Text>
-            <Text style={styles.value}>{item?.time || 'No Time'}</Text>
-            <Text style={styles.value}>Date: {item?.date?.split('T')[0] || 'No Date'}</Text>
+            <Text style={styles.value}>{item.time}</Text>
+            <Text style={styles.value}>Date: {item.date.split('T')[0]}</Text>
           </View>
 
           <View>
             <Text style={styles.label}>Description</Text>
-            <Text style={styles.description}>{item?.description || 'No Description'}</Text>
+            <Text style={styles.description}>{item.description}</Text>
           </View>
         </View>
-
       </View>
 
       {/* Buy Ticket Button */}
       <TouchableOpacity style={styles.downloadButton}>
         <Text style={styles.downloadText}>
-          Buy Ticket - {item?.price ? `${item.price}$` : 'Price not available'}
+          Buy Ticket - {item.price ? `${item.price}$` : 'Price not available'}
         </Text>
       </TouchableOpacity>
     </ScrollView>
@@ -167,8 +160,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     paddingBottom: 20,
     position: 'relative',
-    // borderColor: '#e8aa42',
-    // borderWidth: 2,
   },
   circleLeft2: {
     position: 'absolute',
