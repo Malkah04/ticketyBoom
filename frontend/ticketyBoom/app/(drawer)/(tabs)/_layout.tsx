@@ -1,7 +1,7 @@
 import { Tabs, SplashScreen } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useEffect, useState } from "react";
-import LogoScreen from "../pages/LogoScreen";
+import LogoScreen from "../../pages/LogoScreen";
 
 export default function RootLayout() {
   const [animationDone, setAnimationDone] = useState(false);
@@ -64,12 +64,12 @@ export default function RootLayout() {
       />
 
       <Tabs.Screen
-        name="yourtickets"
+        name="fav"
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ focused, color }) => (
             <Ionicons
-              name={focused ? "ticket-sharp" : "ticket-outline"}
+              name={focused ? "heart-sharp" : "heart-outline"}
               size={24}
               color={color}
             />

@@ -7,12 +7,15 @@ import {
   TouchableOpacity,
   ScrollView,
   Pressable,
+  Alert,
 } from "react-native";
 import { Ionicons, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
-import { useLocalSearchParams, router } from "expo-router";
+import { useLocalSearchParams, router, useRouter } from "expo-router";
 import DashedLine from "react-native-dashed-line";
 import LoadingScreen from "../pages/LoadingScreen";
-import img1 from "../../assets/images/img.jpg";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+// import img1 from ".../../assets/images/img.jpg";
 
 type Ticket = {
   _id: string;
@@ -37,6 +40,8 @@ const Ticket = () => {
   const [item, setItem] = useState<Ticket | null>(null);
   const [press, setPress] = useState(false);
   const { id } = useLocalSearchParams();
+  const [user, setUser] = useState<string | null>(null);
+  const router = useRouter();
 
   const fetchItem = async () => {
     try {
@@ -54,6 +59,17 @@ const Ticket = () => {
   useEffect(() => {
     fetchItem();
   }, [id]);
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const id = await AsyncStorage.getItem("UserId");
+        setUser(id);
+      } catch (e) {
+        console.log("Error loading email:", e);
+      }
+    };
+    loadUser();
+  }, []);
 
   const getImage = () => {
     if (item?.images?.length) {
@@ -63,6 +79,64 @@ const Ticket = () => {
     }
     return "";
   };
+
+  const addFav = async () => {
+    try {
+      const response = await fetch("http://192.168.1.6:8000/api/fav/", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: user,
+          ticketId: id,
+        }),
+      });
+      const data = await response.json();
+      console.log(user);
+      console.log(id);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const deleteFav = async () => {
+    try {
+      const response = await fetch(`http://192.168.1.6:8000/api/fav/`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: user,
+          ticketId: id,
+        }),
+      });
+      const data = await response.json();
+    } catch {}
+  };
+
+  useEffect(() => {
+    if (press) {
+      addFav();
+    } else {
+      deleteFav();
+    }
+  });
+
+  const isItemLoved = async () => {
+    try {
+      const response = await fetch(
+        `http://192.168.1.6:8000/api/fav/Loved/${user}/${id}`
+      );
+      const data = await response.json();
+      if (data.message === "loved") setPress(true);
+      else if (data.message === "notLoved") setPress(false);
+    } catch {}
+  };
+  useEffect(() => {
+    isItemLoved();
+  }, [user, id]);
 
   if (loading || !item) return <LoadingScreen />;
 
@@ -86,7 +160,9 @@ const Ticket = () => {
       <View style={styles.ticketCard}>
         <View style={styles.eventImageContainer}>
           <Pressable
-            onPress={() => setPress(!press)}
+            onPress={() => {
+              setPress(!press);
+            }}
             style={{ alignSelf: "flex-end", padding: 5 }}
           >
             <FontAwesome
@@ -96,10 +172,7 @@ const Ticket = () => {
             />
           </Pressable>
 
-          <Image
-            source={getImage() ? { uri: getImage() } : img1}
-            style={styles.eventImage}
-          />
+          <Image source={{ uri: getImage() }} style={styles.eventImage} />
 
           <Text style={styles.eventTitle}>{item.title}</Text>
         </View>
