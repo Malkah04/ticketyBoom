@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,12 +7,12 @@ import {
   TouchableOpacity,
   ScrollView,
   Pressable,
-} from 'react-native';
-import { Ionicons, FontAwesome, FontAwesome5 } from '@expo/vector-icons';
-import { useLocalSearchParams, router } from 'expo-router';
-import DashedLine from 'react-native-dashed-line';
-import LoadingScreen from '../pages/LoadingScreen'; 
-import img1 from '../../assets/images/img.jpg';
+} from "react-native";
+import { Ionicons, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
+import { useLocalSearchParams, router } from "expo-router";
+import DashedLine from "react-native-dashed-line";
+import LoadingScreen from "../pages/LoadingScreen";
+import img1 from "../../assets/images/img.jpg";
 
 type Ticket = {
   _id: string;
@@ -41,11 +41,11 @@ const Ticket = () => {
   const fetchItem = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://192.168.1.3:8000/api/tickets/${id}`);
+      const response = await fetch(`http://192.168.1.6:8000/api/tickets/${id}`);
       const data = await response.json();
       setItem(data);
     } catch (error) {
-      console.error('Error fetching ticket:', error);
+      console.error("Error fetching ticket:", error);
     } finally {
       setLoading(false);
     }
@@ -61,24 +61,39 @@ const Ticket = () => {
         if (item.images[i]) return item.images[i];
       }
     }
-    return '';
+    return "";
   };
 
   if (loading || !item) return <LoadingScreen />;
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 100 }}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={{ paddingBottom: 100 }}
+    >
       {/* Header */}
       <View style={styles.header}>
-        <Ionicons name="arrow-back" size={24} color="#e8aa42" onPress={() => router.back()} />
+        <Ionicons
+          name="arrow-back"
+          size={24}
+          color="#e8aa42"
+          onPress={() => router.back()}
+        />
         <Text style={styles.headerTitle}>Ticket</Text>
       </View>
 
       {/* Ticket Card */}
       <View style={styles.ticketCard}>
         <View style={styles.eventImageContainer}>
-          <Pressable onPress={() => setPress(!press)} style={{ alignSelf: 'flex-end', padding: 5 }}>
-            <FontAwesome name={press ? 'heart' : 'heart-o'} size={27} color="#FF00A8" />
+          <Pressable
+            onPress={() => setPress(!press)}
+            style={{ alignSelf: "flex-end", padding: 5 }}
+          >
+            <FontAwesome
+              name={press ? "heart" : "heart-o"}
+              size={27}
+              color="#FF00A8"
+            />
           </Pressable>
 
           <Image
@@ -89,7 +104,12 @@ const Ticket = () => {
           <Text style={styles.eventTitle}>{item.title}</Text>
         </View>
 
-        <DashedLine dashLength={9} dashThickness={2} dashGap={6} dashColor={'gray'} />
+        <DashedLine
+          dashLength={9}
+          dashThickness={2}
+          dashGap={6}
+          dashColor={"gray"}
+        />
 
         <View style={styles.containerLoc}>
           <FontAwesome5 name="theater-masks" size={24} color="#e8aa42" />
@@ -115,7 +135,7 @@ const Ticket = () => {
           <View>
             <Text style={styles.label}>Time</Text>
             <Text style={styles.value}>{item.time}</Text>
-            <Text style={styles.value}>Date: {item.date.split('T')[0]}</Text>
+            <Text style={styles.value}>Date: {item.date.split("T")[0]}</Text>
           </View>
 
           <View>
@@ -128,7 +148,7 @@ const Ticket = () => {
       {/* Buy Ticket Button */}
       <TouchableOpacity style={styles.downloadButton}>
         <Text style={styles.downloadText}>
-          Buy Ticket - {item.price ? `${item.price}$` : 'Price not available'}
+          Buy Ticket - {item.price ? `${item.price}$` : "Price not available"}
         </Text>
       </TouchableOpacity>
     </ScrollView>
@@ -140,46 +160,46 @@ export default Ticket;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#121212',
+    backgroundColor: "#121212",
   },
   header: {
     padding: 15,
-    backgroundColor: '#121212',
+    backgroundColor: "#121212",
   },
   headerTitle: {
-    color: '#e8aa42',
+    color: "#e8aa42",
     fontSize: 28,
-    textAlign: 'center',
-    fontWeight: 'bold',
+    textAlign: "center",
+    fontWeight: "bold",
     marginTop: 10,
   },
   ticketCard: {
     margin: 20,
-    backgroundColor: '#1f1f1f',
+    backgroundColor: "#1f1f1f",
     borderRadius: 20,
-    overflow: 'hidden',
+    overflow: "hidden",
     paddingBottom: 20,
-    position: 'relative',
+    position: "relative",
   },
   circleLeft2: {
-    position: 'absolute',
+    position: "absolute",
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#121212',
+    backgroundColor: "#121212",
     left: -20,
-    top: '41%',
+    top: "41%",
     marginTop: -20,
     zIndex: 10,
   },
   circleRight2: {
-    position: 'absolute',
+    position: "absolute",
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#121212',
+    backgroundColor: "#121212",
     right: -20,
-    top: '41%',
+    top: "41%",
     marginTop: -20,
     zIndex: 10,
   },
@@ -187,24 +207,24 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   eventImage: {
-    width: '100%',
+    width: "100%",
     height: 180,
     borderRadius: 20,
   },
   eventTitle: {
     fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#e8aa42',
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#e8aa42",
     marginTop: 15,
   },
   containerLoc: {
-    alignItems: 'center',
+    alignItems: "center",
     marginVertical: 10,
   },
   textLoc: {
     fontSize: 16,
-    color: 'white',
+    color: "white",
     marginTop: 5,
   },
   ticketInfo: {
@@ -213,31 +233,31 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   label: {
-    fontWeight: '600',
-    color: '#e8aa42',
+    fontWeight: "600",
+    color: "#e8aa42",
     marginTop: 10,
     fontSize: 16,
   },
   value: {
     fontSize: 16,
-    color: 'white',
+    color: "white",
   },
   description: {
     fontSize: 16,
-    color: 'white',
+    color: "white",
     marginTop: 5,
   },
   downloadButton: {
-    backgroundColor: '#e8aa42',
+    backgroundColor: "#e8aa42",
     padding: 15,
     borderRadius: 10,
     marginTop: 20,
     marginHorizontal: 20,
   },
   downloadText: {
-    color: '#121212',
-    textAlign: 'center',
+    color: "#121212",
+    textAlign: "center",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });

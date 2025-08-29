@@ -1,34 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { useRouter } from "expo-router";
-import { View, Text, TextInput, Pressable, Image, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  Image,
+  StyleSheet,
+  Alert,
+} from "react-native";
 const navigation = useRouter();
 
 const LogIn = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [err, setErr] = useState("");
 
-  const login=async ()=>{
-    const response =await fetch(`http://192.168.1.3:8000/api/auth/login` ,{
-      method:"post",
-      headers:{
-        "Content-Type":"application/json"
+  const login = async () => {
+    const response = await fetch(`http://192.168.1.6:8000/api/auth/login`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
       },
-      body:JSON.stringify({
+      body: JSON.stringify({
         email,
-        password
-      })
-    })
+        password,
+      }),
+    });
     const data = await response.json();
-    if(response.ok){
-      Alert.alert("login")
-      console.log("login")
-       console.log("User data:", data);
+    if (response.ok) {
+      Alert.alert("login");
+      console.log("login");
+      console.log("User data:", data);
+      navigation.push({
+        pathname: "/(tabs)/profile",
+        params: { id: data._id },
+      });
       return data;
+    } else {
+      setErr("email or password not valid");
     }
-    else{
-      Alert.alert("email or password incorrect")
-    }
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -58,19 +70,31 @@ const LogIn = () => {
       />
 
       {/* Forgot Password */}
-      <Pressable onPress={() => navigation.push('./ForgetPass')}>
+      <Pressable onPress={() => navigation.push("./ForgetPass")}>
         <Text style={styles.forgotPassword}>Forgot Password ?</Text>
       </Pressable>
 
+      {err && (
+        <Text style={{ color: "#26a69a", marginTop: -10, paddingBottom: 5 }}>
+          {" "}
+          {err}{" "}
+        </Text>
+      )}
+
       {/* Login Button */}
-      <Pressable style={styles.signInButton} onPress={() => {login()}}>
+      <Pressable
+        style={styles.signInButton}
+        onPress={() => {
+          login();
+        }}
+      >
         <Text style={styles.signInText}>Login</Text>
       </Pressable>
 
       {/* Sign up link */}
       <View style={styles.signupContainer}>
         <Text style={styles.signupText}>Dont have an account?</Text>
-        <Pressable onPress={() => navigation.push('./SignUp')}>
+        <Pressable onPress={() => navigation.push("./SignUp")}>
           <Text style={styles.signupLink}> Sign up</Text>
         </Pressable>
       </View>
@@ -84,66 +108,66 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 25,
-    backgroundColor: '#121212', 
+    backgroundColor: "#121212",
   },
   header: {
     fontSize: 28,
-    fontWeight: '600',
-    textAlign: 'center',
-    color: '#e8aa42',
+    fontWeight: "600",
+    textAlign: "center",
+    color: "#e8aa42",
     marginBottom: 30,
   },
   label: {
     fontSize: 15,
-    fontWeight: '600',
-    color: '#e8aa42',
+    fontWeight: "600",
+    color: "#e8aa42",
     marginBottom: 6,
     marginTop: 10,
   },
   input: {
     borderWidth: 2,
-    borderColor: '#444',
+    borderColor: "#444",
     borderRadius: 40,
     paddingHorizontal: 20,
     paddingVertical: 10,
     fontSize: 15,
-    backgroundColor: '#1e1e1e',
-    color: '#fff',
+    backgroundColor: "#1e1e1e",
+    color: "#fff",
   },
   forgotPassword: {
-    alignSelf: 'flex-end',
+    alignSelf: "flex-end",
     marginTop: 10,
     marginBottom: 20,
     fontSize: 14,
-    color: '#80cbc4',
-    fontWeight: '600',
+    color: "#80cbc4",
+    fontWeight: "600",
   },
   signInButton: {
-    backgroundColor: '#26a69a',
+    backgroundColor: "#26a69a",
     paddingVertical: 14,
     borderRadius: 30,
     marginBottom: 16,
   },
   signInText: {
-    textAlign: 'center',
-    color: '#fff',
-    fontWeight: '500',
+    textAlign: "center",
+    color: "#fff",
+    fontWeight: "500",
     fontSize: 16,
   },
   signupContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: 10,
   },
   signupText: {
     fontSize: 15,
-    color: '#e8aa42',
+    color: "#e8aa42",
   },
   signupLink: {
     fontSize: 15,
-    color: '#80cbc4',
-    fontWeight: '600',
+    color: "#80cbc4",
+    fontWeight: "600",
     marginLeft: 4,
   },
   logo: {

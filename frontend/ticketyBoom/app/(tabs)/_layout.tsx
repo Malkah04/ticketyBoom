@@ -29,8 +29,8 @@ export default function RootLayout() {
           borderTopColor: "#333",
           borderTopWidth: 1,
         },
-        tabBarActiveTintColor: "#e8aa42",  // اللون الذهبي لما الأيقونة تكون مفعلة
-        tabBarInactiveTintColor: "#888",   // لون الأيقونة الغير مفعّلة
+        tabBarActiveTintColor: "#e8aa42", // اللون الذهبي لما الأيقونة تكون مفعلة
+        tabBarInactiveTintColor: "#888", // لون الأيقونة الغير مفعّلة
         headerShown: false,
       })}
       initialRouteName="index"
