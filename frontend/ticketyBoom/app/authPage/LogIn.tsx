@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   View,
   Text,
@@ -10,7 +11,6 @@ import {
   Alert,
 } from "react-native";
 const navigation = useRouter();
-
 const LogIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,11 +29,10 @@ const LogIn = () => {
     });
     const data = await response.json();
     if (response.ok) {
-      Alert.alert("login");
-      console.log("login");
-      console.log("User data:", data);
+      await AsyncStorage.setItem("email", email);
+      await AsyncStorage.setItem("UserId", data._id);
       navigation.push({
-        pathname: "/(tabs)/profile",
+        pathname: "../(drawer)/(tabs)/profile",
         params: { id: data._id },
       });
       return data;

@@ -10,7 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 
-import ExploreSection from "../ExploreSection";
+import ExploreSection from "../../ExploreSection";
 
 type tickets = {
   _id: string;

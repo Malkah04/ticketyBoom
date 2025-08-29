@@ -48,7 +48,7 @@ const SignUp = () => {
       setErrMatch("");
       if (response.ok) {
         navigation.push({
-          pathname: "/(tabs)/profile",
+          pathname: "../(drawer)/(tabs)/profile",
           params: { id: data._id },
         });
         return data;
