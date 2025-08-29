@@ -78,7 +78,7 @@ export default function Index() {
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item) => item._id}
           ListFooterComponent={() => (
-            <Pressable onPress={() => router.push("../pages/explore")}>
+            <Pressable onPress={() => router.push("../ticket/all_tickets")}>
               <View style={styles.card}>
                 <Text style={styles.seeMoreText}>See More Tickets</Text>
               </View>
