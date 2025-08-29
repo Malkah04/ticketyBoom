@@ -9,7 +9,7 @@ import {
   Pressable,
 } from "react-native";
 import { useEffect, useState } from "react";
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import LoadingScreen from "./pages/LoadingScreen";
 
@@ -34,7 +34,7 @@ type Ticket = {
 const cardWidth = 200; // حجم الكارد المناسب في العرض
 
 export default function ExploreSection() {
-  const [lifeStyle, setLifeStyle] = useState<Ticket[]>([]);
+  const [lifestyle, setLifeStyle] = useState<Ticket[]>([]);
   const [movie, setMovie] = useState<Ticket[]>([]);
   const [comedy, setComedy] = useState<Ticket[]>([]);
   const [sport, setSport] = useState<Ticket[]>([]);
@@ -44,6 +44,7 @@ export default function ExploreSection() {
   const [theater, setTheater] = useState<Ticket[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [press, setPress] = useState(false);
+  const router = useRouter();
 
   const getTickets = async (c: string) => {
     try {
@@ -70,7 +71,7 @@ export default function ExploreSection() {
         case "comedy":
           setComedy(data);
           break;
-        case "lifeStyle":
+        case "lifestyle":
           setLifeStyle(data);
           break;
       }
@@ -86,7 +87,7 @@ export default function ExploreSection() {
   };
 
   useEffect(() => {
-    getTickets("lifeStyle");
+    getTickets("lifestyle");
     getTickets("comedy");
     getTickets("concert");
     getTickets("sport");
@@ -122,10 +123,10 @@ export default function ExploreSection() {
     { title: "Art", data: art },
     { title: "Concert", data: concert },
     { title: "Comedy", data: comedy },
-    { title: "Movies", data: movie },
+    { title: "Movie", data: movie },
     { title: "Sport", data: sport },
     { title: "Theater", data: theater },
-    { title: "Lifestyle", data: lifeStyle },
+    { title: "Lifestyle", data: lifestyle },
   ];
 
   if (loading) return <LoadingScreen />;
@@ -138,7 +139,28 @@ export default function ExploreSection() {
     >
       {sections.map((section) => (
         <View key={section.title} style={{ marginBottom: 30 }}>
-          <Text style={styles.sectionTitle}>{section.title}</Text>
+          <View
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              flexDirection: "row",
+            }}
+          >
+            <Text style={styles.sectionTitle}>{section.title}</Text>
+            <Pressable
+              onPress={() => {
+                router.push({
+                  pathname: "/ticket/category",
+                  params: { category_name: section.title.toLowerCase() },
+                });
+              }}
+            >
+              <Text style={{ color: "#e8aa42", marginLeft: -10 }}>
+                {" "}
+                see more{" "}
+              </Text>
+            </Pressable>
+          </View>
           <FlatList
             data={section.data}
             keyExtractor={(item) => item._id}
